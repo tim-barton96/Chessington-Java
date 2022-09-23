@@ -27,6 +27,33 @@ public class Pawn extends AbstractPiece {
         Coordinates whiteMoveTwo = from.plus(-2,0);
         Coordinates whiteCaptureLeft = from.plus(-1,-1);
         Coordinates whiteCaptureRight = from.plus(-1,1);
+
+        //out of bounds check
+        if (this.colour == PlayerColour.WHITE && whiteMoveOne.getRow() < 0) {
+            return allowedMoves;
+        } 
+        if (this.colour == PlayerColour.BLACK && blackMoveOne.getRow() > 7) {
+            return allowedMoves;
+        }
+
+
+         //capture!!!
+         switch (this.colour) {
+            case BLACK:
+                if (blackCaptureRight.getCol() < 8 &&!board.isSpaceEmpty(blackCaptureRight) && board.get(blackCaptureRight).getColour() == PlayerColour.WHITE) {
+                    allowedMoves.add(new Move(from, blackCaptureRight));
+                }
+                if (blackCaptureLeft.getCol() >= 0 && !board.isSpaceEmpty(blackCaptureLeft) && board.get(blackCaptureLeft).getColour() == PlayerColour.WHITE) {
+                    allowedMoves.add(new Move(from, blackCaptureLeft));
+                }
+            case WHITE: 
+                if (whiteCaptureRight.getCol() < 8 && !board.isSpaceEmpty(whiteCaptureRight) && board.get(whiteCaptureRight).getColour() == PlayerColour.BLACK) {
+                    allowedMoves.add(new Move(from, whiteCaptureRight));
+                    }
+                if (whiteCaptureLeft.getCol() >= 0 && !board.isSpaceEmpty(whiteCaptureLeft) && board.get(whiteCaptureLeft).getColour() == PlayerColour.BLACK) {
+                    allowedMoves.add(new Move(from, whiteCaptureLeft));
+                }
+        }
         
         //blocked in check
         if (this.colour == PlayerColour.WHITE && !board.isSpaceEmpty(whiteMoveOne)) {
@@ -36,45 +63,30 @@ public class Pawn extends AbstractPiece {
         }
     
     
-        //edge of board check
+        //standard move
         if (this.colour == PlayerColour.WHITE) {
             allowedMoves.add(new Move(from, whiteMoveOne));
         } 
         if (this.colour == PlayerColour.BLACK) {
             allowedMoves.add(new Move(from, blackMoveOne));
         }
+
         
         //starting move check
         if (!this.hasMoved) {
             switch (this.colour) {
                 case BLACK: 
-                    if (board.isSpaceEmpty(blackMoveTwo)) {
+                    if (board.isSpaceEmpty(blackMoveTwo) && from.getRow() == 1) {
                         allowedMoves.add(new Move(from, blackMoveTwo));
                     }
                 case WHITE: 
-                    if (board.isSpaceEmpty(whiteMoveTwo)) {
+                    if (board.isSpaceEmpty(whiteMoveTwo) && from.getRow() == 6) {
                         allowedMoves.add(new Move(from, whiteMoveTwo));
                     }
             }
         }
 
-        //capture!!!
-        switch (this.colour) {
-            case BLACK:
-                if (!board.isSpaceEmpty(blackCaptureRight) && board.get(blackCaptureRight).getColour() == PlayerColour.WHITE) {
-                    allowedMoves.add(new Move(from, blackCaptureRight));
-                }
-                if (!board.isSpaceEmpty(blackCaptureLeft) && board.get(blackCaptureLeft).getColour() == PlayerColour.WHITE) {
-                    allowedMoves.add(new Move(from, blackCaptureLeft));
-                }
-            case WHITE: 
-                if (!board.isSpaceEmpty(whiteCaptureRight) && board.get(whiteCaptureRight).getColour() == PlayerColour.BLACK) {
-                    allowedMoves.add(new Move(from, whiteCaptureRight));
-                    }
-                if (!board.isSpaceEmpty(whiteCaptureLeft) && board.get(whiteCaptureLeft).getColour() == PlayerColour.BLACK) {
-                    allowedMoves.add(new Move(from, whiteCaptureLeft));
-                }
-                }
+       
         
 
 
