@@ -1,6 +1,7 @@
 package training.chessington.model;
 
 import training.chessington.model.pieces.*;
+import training.chessington.model.pieces.Piece.PieceType;
 
 public class Board {
 
@@ -43,6 +44,9 @@ public class Board {
 
     public void move(Coordinates from, Coordinates to) {
         board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];
+        if (board[to.getRow()][to.getCol()].getType() == PieceType.PAWN){
+            ((Pawn) board[to.getRow()][to.getCol()]).changeHasMoved();
+        }
         board[from.getRow()][from.getCol()] = null;
     }
 
