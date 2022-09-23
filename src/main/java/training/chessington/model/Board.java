@@ -42,6 +42,17 @@ public class Board {
         return board[coords.getRow()][coords.getCol()];
     }
 
+    public boolean isSpaceEmpty(Coordinates coords) {
+        try {
+            if (board[coords.getRow()][coords.getCol()] != null) {
+                return false;
+            }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return false;
+        }
+        return true;
+    }
+
     public void move(Coordinates from, Coordinates to) {
         board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];
         if (board[to.getRow()][to.getCol()].getType() == PieceType.PAWN){
