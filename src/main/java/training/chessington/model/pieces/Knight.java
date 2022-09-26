@@ -53,11 +53,4 @@ public class Knight extends AbstractPiece {
         return validCoords;
     }
 
-    public boolean isSpaceInBounds(Coordinates coords) {
-        if (coords.getRow() < 0 || coords.getRow() > 7) {
-            return false;
-        }
-        return coords.getCol() >= 0 && coords.getCol() <= 7;
-    }
-
 }

@@ -18,25 +18,28 @@ public class Bishop extends AbstractPiece {
 
         List<Move> allowedMoves = new ArrayList<>();
 
-        boolean[] upLeft = {false, false};
+        String[] upLeft = {"Up", "Left"};
         allowedMoves.addAll(getDiagonalMoves(from, board, upLeft));
-        boolean[] upRight = {true, false};
+
+        String[] upRight = {"Up", "Right"};
         allowedMoves.addAll(getDiagonalMoves(from, board, upRight));
-        boolean[] downLeft = {false, true};
+
+        String[] downLeft = {"Down", "Left"};
         allowedMoves.addAll(getDiagonalMoves(from, board, downLeft));
-        boolean[] downRight ={true, true};
+
+        String[] downRight ={"Down", "Right"};
         allowedMoves.addAll(getDiagonalMoves(from, board, downRight));
 
         return allowedMoves;
     }
 
 
-    public List<Move> getDiagonalMoves(Coordinates from, Board board, boolean[] whichDirectionArray) {
+    public List<Move> getDiagonalMoves(Coordinates from, Board board, String[] whichDirectionArray) {
 
         List<Move> lineMoves = new ArrayList<>();
         boolean isBlocked = false;
-        int row = whichDirectionArray[0]? 1: -1;
-        int col = whichDirectionArray[1]? 1: -1;
+        int col = whichDirectionArray[0].equals("Down")? 1: -1;
+        int row = whichDirectionArray[1].equals("Right")? 1: -1;
         int counter = 1;
 
         while (counter < 8 && !isBlocked){
@@ -55,19 +58,4 @@ public class Bishop extends AbstractPiece {
 
         return lineMoves;
     }
-
-    public boolean isOpponentInSpace(Coordinates coords, Board board) {
-        if (board.isSpaceEmpty(coords)) {
-            return false;
-        } else return !board.get(coords).getColour().equals(this.colour);
-    }
-
-
-
-    public boolean isSpaceInBounds(Coordinates coords) {
-        if (coords.getRow() < 0 || coords.getRow() > 7) {
-            return false;
-        } else return coords.getCol() >= 0 && coords.getCol() <= 7;
-    }
-
 }

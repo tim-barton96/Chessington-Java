@@ -44,4 +44,9 @@ public class BishopTest {
         // Assert
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(1, 1)));
     }
+
+    @Test
+    public void bishopCanCapture() {
+
+    }
 }
