@@ -15,6 +15,20 @@ public class Bishop extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
+
+        List<Move> allowedMoves = new ArrayList<>();
+
+
+
+
         return new ArrayList<>();
+    }
+
+
+    public boolean isSpaceInBounds(Coordinates coords) {
+        if (coords.getRow() < 0 || coords.getRow() > 7) {
+            return false;
+        }
+        return coords.getCol() >= 0 && coords.getCol() <= 7;
     }
 }
